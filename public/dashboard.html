@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon Services</title>
+</head>
+<body>
+    <h1>Salon Services</h1>
+    <div id="services"></div><br>
+
+    <h2>Staff and Their Services</h2>
+    <div id="staff"></div><br>
+
+    <!-- Add this section for booking appointments -->
+    <h2>Book Appointment</h2>
+    <form id="bookAppointmentForm">
+        <input id="appointmentDate" type="date" required />
+        <select id="appointmentTime" required>
+            <option value="">Select a time slot</option>
+            <option value=" 9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</option>
+            <option value=" 11:00 AM - 1:00 PM"> 11:00 AM - 1:00 PM</option>
+            <option value=" 1:00 PM - 3:00 PM"> 1:00 PM - 3:00 PM </option>
+            <option value=" 3:00 PM - 5:00 PM"> 3:00 PM - 5:00 PM</option>
+            <option value="5:00 PM - 7:00 PM"> 5:00 PM - 7:00 PM</option>
+            <option value=" 7:00 PM - 8:00 PM"> 7:00 PM - 8:00 PM</option>
+            <option value="SUNDAY CLOSED">SUNDAY CLOSED</option>
+        </select>
+        <input id="customerName" type="text" placeholder="Customer Name" required />
+        <input id="customerEmail" type="email" placeholder="Customer Email" required />
+        <input id="customerPhone" type="tel" placeholder="Customer Phone" required />
+        <input id="staffId" type="number" placeholder="Staff ID" required />
+        <input id="serviceId" type="number" placeholder="Service ID" required />
+        <button type="submit">Book Appointment</button>
+    </form>
+
+
+    <h2>Appointment Details</h2>
+    <div id="appointmentDetails"></div><br>
+
+    <h2>Make Payment</h2>
+    <form id="makePaymentForm">
+        <input id="paymentAppointmentId" type="text" placeholder="Appointment ID" required />
+        <button type="submit">Make Payment</button>
+    </form><br>
+
+    <h2>Update Appointment</h2>
+    <form id="updateAppointmentForm">
+        <input id="appointmentId" type="text" placeholder="Appointment ID" required />
+        <input id="newDate" type="date" placeholder="New Date" required />
+        <select id="newTime" required>
+            <option value="">Select a time slot</option>
+            <option value=" 9:00 AM - 11:00 AM">9:00 AM - 11:00 AM</option>
+            <option value=" 11:00 AM - 1:00 PM"> 11:00 AM - 1:00 PM</option>
+            <option value=" 1:00 PM - 3:00 PM"> 1:00 PM - 3:00 PM </option>
+            <option value=" 3:00 PM - 5:00 PM"> 3:00 PM - 5:00 PM</option>
+            <option value="5:00 PM - 7:00 PM"> 5:00 PM - 7:00 PM</option>
+            <option value=" 7:00 PM - 8:00 PM"> 7:00 PM - 8:00 PM</option>
+            <option value="SUNDAY CLOSED">SUNDAY CLOSED</option>
+        </select>
+        <button type="submit">Update Appointment</button>
+    </form>
+
+    
+    <h2>Delete Appointment</h2>
+    <form id="deleteAppointmentForm">
+        <input id="deleteAppointmentId" type="text" placeholder="Appointment ID" required />
+        <button type="submit">Delete Appointment</button>
+    </form><br><br>
+
+    <h2>Add New Service</h2>
+    <form id="addServiceForm">
+        <input id="name" type="text" placeholder="Service Name" />
+        <input id="description" type="text" placeholder="Service Description" />
+        <input id="duration" type="number" placeholder="Duration" />
+        <input id="price" type="number" placeholder="Price" />
+        <input id="serviceAvailability" type="text" placeholder="Availability" />
+        <button type="submit">Add Service</button>
+    </form>
+
+    <h2>Add New Staff</h2>
+    <form id="addStaffForm">
+        <label for="staffName">Name:</label>
+        <input type="text" id="staffName" name="staffName" required><br>
+        <label for="specialization">Specialization:</label>
+        <input type="text" id="specialization" name="specialization" required><br>
+        <label for="availability">Availability:</label>
+        <input type="text" id="staffAvailability" name="availability" required><br>
+        <button type="submit">Add Staff</button>
+    </form>
+
+    <h2>Assign Service to Staff</h2>
+    <form id="assignServiceForm">
+        <label for="staffId">Staff ID:</label>
+        <input type="number" id="staffId" name="staffId" required><br>
+        <label for="serviceId">Service ID:</label>
+        <input type="number" id="serviceId" name="serviceId" required><br>
+        <button type="submit">Assign Service</button>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>

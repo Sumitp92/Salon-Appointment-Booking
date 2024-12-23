@@ -11,8 +11,7 @@
 
     <h2>Staff and Their Services</h2>
     <div id="staff"></div><br>
-
-    <!-- Add this section for booking appointments -->
+    
     <h2>Book Appointment</h2>
     <form id="bookAppointmentForm">
         <input id="appointmentDate" type="date" required />
@@ -44,6 +43,25 @@
         <button type="submit">Make Payment</button>
     </form><br>
 
+<h2>Leave a Review</h2>
+<form id="leaveReviewForm">
+    <input id="reviewAppointmentId" type="text" placeholder="Appointment ID" required />
+    <input id="reviewStaffId" type="text" placeholder="Staff ID" required />
+    <input id="reviewRating" type="number" placeholder="Rating (1-5)" required />
+    <textarea id="reviewComment" placeholder="Comment"></textarea>
+    <button type="submit">Submit Review</button>
+</form><br>
+
+
+ <div id = "respondToReviewForm">
+<h2>Respond to Review</h2>
+<form id="respondToReviewForm">
+    <input id="reviewId" type="text" placeholder="Review ID" required />
+    <textarea id="reviewResponse" placeholder="Response"></textarea>
+    <button type="submit">Submit Response</button>
+</form></div><br>
+  
+
     <h2>Update Appointment</h2>
     <form id="updateAppointmentForm">
         <input id="appointmentId" type="text" placeholder="Appointment ID" required />
@@ -68,6 +86,8 @@
         <button type="submit">Delete Appointment</button>
     </form><br><br>
 
+
+    <div id="addServiceForm">
     <h2>Add New Service</h2>
     <form id="addServiceForm">
         <input id="name" type="text" placeholder="Service Name" />
@@ -76,8 +96,9 @@
         <input id="price" type="number" placeholder="Price" />
         <input id="serviceAvailability" type="text" placeholder="Availability" />
         <button type="submit">Add Service</button>
-    </form>
+    </form></div>
 
+    <div id="addStaffForm">
     <h2>Add New Staff</h2>
     <form id="addStaffForm">
         <label for="staffName">Name:</label>
@@ -87,8 +108,9 @@
         <label for="availability">Availability:</label>
         <input type="text" id="staffAvailability" name="availability" required><br>
         <button type="submit">Add Staff</button>
-    </form>
+    </form></div>
 
+    <div id="assignServiceForm">
     <h2>Assign Service to Staff</h2>
     <form id="assignServiceForm">
         <label for="staffId">Staff ID:</label>
@@ -96,7 +118,7 @@
         <label for="serviceId">Service ID:</label>
         <input type="number" id="serviceId" name="serviceId" required><br>
         <button type="submit">Assign Service</button>
-    </form>
+    </form></div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

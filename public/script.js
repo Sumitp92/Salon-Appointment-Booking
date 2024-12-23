@@ -42,7 +42,8 @@ document.getElementById('loginform')?.addEventListener('submit', async (e) => {
 
         if (response.data.success) {
             localStorage.setItem('authToken', response.data.token);
-            localStorage.setItem('username', response.data.user.name); 
+            localStorage.setItem('username', response.data.user.name);
+            localStorage.setItem('userEmail', email); // Store the user's email
             alert('User Login Successfully');
             window.location.href = 'dashboard.html';
         } else {
@@ -64,6 +65,18 @@ document.getElementById('loginBtn')?.addEventListener('click', () => {
     window.location.href = 'login.html';
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    const userEmail = localStorage.getItem('userEmail');
+    const isAdmin = userEmail === 'admin@gmail.com';
+
+    if (!isAdmin) {
+        document.getElementById('respondToReviewForm').style.display = 'none';
+        document.getElementById('addServiceForm').style.display = 'none';
+        document.getElementById('addStaffForm').style.display = 'none';
+        document.getElementById('assignServiceForm').style.display = 'none';
+    }
+}
+);
 
 document.addEventListener('DOMContentLoaded', () => {
     const fetchServices = async () => {
@@ -91,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+   
     const fetchStaffWithServices = async () => {
         const token = localStorage.getItem('authToken');
         try {
@@ -279,6 +293,56 @@ document.getElementById('makePaymentForm').addEventListener('submit', (event) =>
     initiatePayment(appointmentId);
 });
     
+const leaveReview = async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('authToken');
+    const appointmentId = document.getElementById('reviewAppointmentId').value;
+    const staffId = document.getElementById('reviewStaffId').value;
+    const rating = document.getElementById('reviewRating').value;
+    const comment = document.getElementById('reviewComment').value;
+
+    try {
+        const response = await axios.post('http://localhost:3000/api/reviews', {
+            appointmentId,
+            staffId,
+            rating,
+            comment
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        alert('Review submitted successfully');
+        document.getElementById('leaveReviewForm').reset();
+    } catch (error) {
+        console.error('Error submitting review:', error.message);
+    }
+};
+
+const respondToReview = async (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('authToken');
+    const reviewId = document.getElementById('reviewId').value;
+    const response = document.getElementById('reviewResponse').value;
+
+    try {
+        const res = await axios.put(`http://localhost:3000/api/reviews/${reviewId}/response`, {
+            response
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        alert('Response submitted successfully');
+        document.getElementById('respondToReviewForm').reset();
+    } catch (error) {
+        console.error('Error submitting response:', error.message);
+    }
+};
+
+document.getElementById('leaveReviewForm').addEventListener('submit', leaveReview);
+document.getElementById('respondToReviewForm').addEventListener('submit', respondToReview);
+
+
+
     const addServiceForm = document.getElementById('addServiceForm');
     const addStaffForm = document.getElementById('addStaffForm');
     const assignServiceForm = document.getElementById('assignServiceForm');

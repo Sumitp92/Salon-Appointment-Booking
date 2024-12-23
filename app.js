@@ -19,7 +19,7 @@ const Service = require('./model/service');
 const StaffService = require('./model/staffService');
 const Appointment = require('./model/appointment');
 const Payment = require('./model/invoice');
-
+const Review = require('./model/review');
 
 Staff.hasMany(Appointment, { foreignKey: 'staffId' });
 Service.hasMany(Appointment, { foreignKey: 'serviceId' });
@@ -30,15 +30,20 @@ Appointment.belongsTo(Service, { foreignKey: 'serviceId' });
 Staff.belongsToMany(Service, { through: StaffService, foreignKey: 'staffId' });
 Service.belongsToMany(Staff, { through: StaffService, foreignKey: 'serviceId' });
 
+Review.belongsTo(Appointment, { foreignKey: 'appointmentId' });
+Review.belongsTo(Staff, { foreignKey: 'staffId' });
+
 const GeneralRoutes = require('./route/user');
 const serviceRoutes = require('./route/service');
 const staffRoutes = require('./route/staff');
 const appointmentRoutes = require('./route/appointment');
+const reviewRoutes = require('./route/review');
 
 app.use('/api', GeneralRoutes);
 app.use('/api' , serviceRoutes);
 app.use('/api', staffRoutes);
 app.use('/api', appointmentRoutes );
+app.use('/api', reviewRoutes);
 
 
 app.get('/', (req, res) => {

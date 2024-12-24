@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isAdmin = userEmail === 'admin@gmail.com';
 
     if (!isAdmin) {
-        document.getElementById('respondToReviewForm').style.display = 'none';
+        document.getElementById('respondToReviewContainer').style.display = 'none';
         document.getElementById('addServiceContainer').style.display = 'none';
         document.getElementById('addStaffContainer').style.display = 'none';
         document.getElementById('assignServiceContainer').style.display = 'none';
@@ -415,14 +415,13 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
 
         e.preventDefault();
     
-        const staffId = document.getElementById('assignStaffId').value; // Updated ID
+        const staffId = document.getElementById('assignStaffId').value; 
     
-        const serviceId = document.getElementById('assignServiceId').value; // Updated ID
+        const serviceId = document.getElementById('assignServiceId').value; 
     
         const token = localStorage.getItem('authToken');
     
     
-        // Log the form data to check the values
     
         console.log('Assign Service Form Data:', { staffId, serviceId });    
         try {

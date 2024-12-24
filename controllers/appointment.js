@@ -3,6 +3,7 @@ const Appointment = require('../model/appointment');
 const Invoice = require('../model/invoice');
 const Staff = require('../model/staff');
 const Service = require('../model/service');
+const Review = require('../model/review');
 const { sendBookingConfirmation, sendAppointmentReminder } = require('./emailservice');
 
 const getAvailableSlots = async (req, res) => {
@@ -76,13 +77,17 @@ const cancelAppointment = async (req, res) => {
         if (!appointment) {
             return res.status(404).json({ error: 'Appointment not found' });
         }
-
+        await Review.destroy({
+            where: { appointmentId: id }
+        });
         await appointment.destroy();
+
         res.json({ success: true, message: 'Appointment canceled successfully' });
     } catch (error) {
         res.status(500).json({ error: 'Failed to cancel appointment' });
     }
 };
+
 
 const getAppointmentDetails = async (req, res) => {
     try {

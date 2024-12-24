@@ -43,7 +43,7 @@ document.getElementById('loginform')?.addEventListener('submit', async (e) => {
         if (response.data.success) {
             localStorage.setItem('authToken', response.data.token);
             localStorage.setItem('username', response.data.user.name);
-            localStorage.setItem('userEmail', email); // Store the user's email
+            localStorage.setItem('userEmail', email); 
             alert('User Login Successfully');
             window.location.href = 'dashboard.html';
         } else {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isAdmin = userEmail === 'admin@gmail.com';
 
     if (!isAdmin) {
-        document.getElementById('respondToReviewContainer').style.display = 'none';
+        document.getElementById('respondToReviewForm').style.display = 'none';
         document.getElementById('addServiceContainer').style.display = 'none';
         document.getElementById('addStaffContainer').style.display = 'none';
         document.getElementById('assignServiceContainer').style.display = 'none';
@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 serviceDiv.innerHTML = `
                     <h3>${service.name}</h3>
                     <p>${service.description}</p>
+                    <p>Id: ${service.id}</p>
                     <p>Duration: ${service.duration} Hours</p>
                     <p>Price:RS ${service.price}</p>
                     <p>Availability: ${service.availability}</p>
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const memberDiv = document.createElement('div');
                 memberDiv.innerHTML = `
                     <h3>${member.name}</h3>
+                    <p>Id: ${member.id}</p>
                     <p>Specialization: ${member.specialization}</p>
                     <p>Availability: ${member.availability}</p>
                     <h4>Services:</h4>
@@ -415,15 +417,12 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
 
         e.preventDefault();
     
-        const staffId = document.getElementById('assignStaffId').value; 
+        const staffId = document.getElementById('assignStaffId').value;
     
-        const serviceId = document.getElementById('assignServiceId').value; 
+        const serviceId = document.getElementById('assignServiceId').value;
     
         const token = localStorage.getItem('authToken');
-    
-    
-    
-        console.log('Assign Service Form Data:', { staffId, serviceId });    
+
         try {
     
             const response = await axios.post('http://localhost:3000/api/staff/assign-service',

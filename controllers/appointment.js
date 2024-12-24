@@ -18,6 +18,7 @@ const getAvailableSlots = async (req, res) => {
 const bookAppointment = async (req, res) => {
     try {
         const { date, time, customerName, customerEmail, customerPhone, staffId, serviceId } = req.body;
+        const userId = req.user.id;
 
         if (!date || !time || !customerName || !customerEmail || !customerPhone || !staffId || !serviceId) {
             return res.status(400).json({ error: 'All fields are required' });
@@ -30,11 +31,12 @@ const bookAppointment = async (req, res) => {
             customerEmail,
             customerPhone,
             staffId,
-            serviceId
+            serviceId,
+            userId
         });
 
         try {
-            await sendBookingConfirmation(customerEmail, {id: appointment.id,   date, time, customerName, staffId, serviceId });
+            await sendBookingConfirmation(customerEmail, { id: appointment.id, date, time, customerName, staffId, serviceId });
         } catch (emailError) {
             console.error('Error sending confirmation email:', emailError);
         }
@@ -84,7 +86,9 @@ const cancelAppointment = async (req, res) => {
 
 const getAppointmentDetails = async (req, res) => {
     try {
+        const userId = req.user.id;
         const appointments = await Appointment.findAll({
+            where: { userId },
             include: [Staff, Service]
         });
 
@@ -97,5 +101,4 @@ const getAppointmentDetails = async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve appointments' });
     }
 };
-
 module.exports = { getAvailableSlots, bookAppointment, getAppointmentDetails, rescheduleAppointment, cancelAppointment };

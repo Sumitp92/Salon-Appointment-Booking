@@ -55,6 +55,7 @@ const assignService = async (req, res) => {
         const staffService = await StaffService.create({ staffId, serviceId });
         res.status(201).json(staffService);
     } catch (error) {
+        console.error('Error assigning service:', error);
         res.status(500).json({ error: 'Failed to assign service' });
     }
 };

@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const sequelize = require('../util/databases');
 const Staff = require('./staff');
 const Service = require('./service');
+const User = require('./user');
 
 const Appointment = sequelize.define('appointment', {
     id: {
@@ -43,6 +44,14 @@ const Appointment = sequelize.define('appointment', {
         allowNull: false,
         references: {
             model: Service,
+            key: 'id'
+        }
+    },
+    userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+            model: User,
             key: 'id'
         }
     }

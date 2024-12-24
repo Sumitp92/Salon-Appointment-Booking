@@ -71,9 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!isAdmin) {
         document.getElementById('respondToReviewForm').style.display = 'none';
-        document.getElementById('addServiceForm').style.display = 'none';
-        document.getElementById('addStaffForm').style.display = 'none';
-        document.getElementById('assignServiceForm').style.display = 'none';
+        document.getElementById('addServiceContainer').style.display = 'none';
+        document.getElementById('addStaffContainer').style.display = 'none';
+        document.getElementById('assignServiceContainer').style.display = 'none';
     }
 }
 );
@@ -377,7 +377,7 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
             if (response.status === 201) {
                 alert('Service added successfully');
                 fetchServices();
-                addServiceForm.reset();
+                document.getElementById('addServiceForm').reset();
             } else {
                 alert('Failed to add service');
             }
@@ -399,10 +399,10 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
                 { name, specialization, availability },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            if (response.status === 201) {
+            if (response.status === 200) {
                 alert('Staff added successfully');
                 fetchStaffWithServices();
-                addStaffForm.reset();
+                document.getElementById('addStaffForm').reset();
             } else {
                 alert('Failed to add staff');
             }
@@ -412,26 +412,49 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
     });
 
     assignServiceForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const staffId = document.getElementById('staffId').value;
-        const serviceId = document.getElementById('serviceId').value;
-        const token = localStorage.getItem('authToken');
 
+        e.preventDefault();
+    
+        const staffId = document.getElementById('assignStaffId').value; // Updated ID
+    
+        const serviceId = document.getElementById('assignServiceId').value; // Updated ID
+    
+        const token = localStorage.getItem('authToken');
+    
+    
+        // Log the form data to check the values
+    
+        console.log('Assign Service Form Data:', { staffId, serviceId });    
         try {
+    
             const response = await axios.post('http://localhost:3000/api/staff/assign-service',
+    
                 { staffId, serviceId },
+    
                 { headers: { Authorization: `Bearer ${token}` } }
+    
             );
+    
             if (response.status === 201) {
+    
                 alert('Service assigned to staff');
+    
                 fetchStaffWithServices();
-                assignServiceForm.reset();
+    
+                document.getElementById('assignServiceForm').reset();
+    
             } else {
+    
                 alert('Failed to assign service');
+    
             }
+    
         } catch (err) {
+    
             console.log('Error assigning service', err);
+    
         }
+    
     });
 
     fetchServices();

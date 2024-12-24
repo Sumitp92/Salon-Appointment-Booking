@@ -18,9 +18,11 @@ const addService = async (req, res) => {
         const service = await Service.create({ name, description, duration, price, availability });
         res.status(201).json(service);
     } catch (error) {
+        console.error('Error in addService:', error);
         res.status(500).json({ error: 'Failed to add service' });
     }
 };
+
 
 const updateService = async (req, res) => {
     try {

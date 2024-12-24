@@ -12,7 +12,7 @@ document.getElementById('signupform')?.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await axios.post('http://localhost:3000/api/signup', { name, email, phone, password });
+        const response = await axios.post('http://65.0.45.199:3000/api/signup', { name, email, phone, password });
 
         if (response.data.success) {
             alert('Signup Successful');
@@ -38,12 +38,12 @@ document.getElementById('loginform')?.addEventListener('submit', async (e) => {
     }
 
     try {
-        const response = await axios.post('http://localhost:3000/api/login', { email, password });
+        const response = await axios.post('http://65.0.45.199:3000/api/login', { email, password });
 
         if (response.data.success) {
             localStorage.setItem('authToken', response.data.token);
             localStorage.setItem('username', response.data.user.name);
-            localStorage.setItem('userEmail', email); 
+            localStorage.setItem('userEmail', email); // Store the user's email
             alert('User Login Successfully');
             window.location.href = 'dashboard.html';
         } else {
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchServices = async () => {
         const token = localStorage.getItem('authToken');
         try {
-            const response = await axios.get('http://localhost:3000/api/services', {
+            const response = await axios.get('http://65.0.45.199:3000/api/services', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const services = response.data;
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchStaffWithServices = async () => {
         const token = localStorage.getItem('authToken');
         try {
-            const response = await axios.get('http://localhost:3000/api/staff', {
+            const response = await axios.get('http://65.0.45.199:3000/api/staff', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const staff = response.data ; 
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fetchAppointmentDetails = async () => {
         const token = localStorage.getItem('authToken');
         try {
-            const response = await axios.get('http://localhost:3000/api/appointments', {
+            const response = await axios.get('http://65.0.45.199:3000/api/appointments', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const appointments = response.data;
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const token = localStorage.getItem('authToken');
     
         try {
-            const response = await axios.post('http://localhost:3000/api/appointments', 
+            const response = await axios.post('http://65.0.45.199:3000/api/appointments', 
                 { date, time, customerName, customerEmail, customerPhone, staffId, serviceId }, 
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newTime = document.getElementById('newTime').value;
     
         try {
-            const response = await axios.put(`http://localhost:3000/api/appointments/${appointmentId}`, {
+            const response = await axios.put(`http://65.0.45.199:3000/api/appointments/${appointmentId}`, {
                 date: newDate,
                 time: newTime
             }, {
@@ -232,7 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const appointmentId = document.getElementById('deleteAppointmentId').value;
     
         try {
-            const response = await axios.delete(`http://localhost:3000/api/appointments/${appointmentId}`, {
+            const response = await axios.delete(`http://65.0.45.199:3000/api/appointments/${appointmentId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
     
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initiatePayment = async (appointmentId) => {
     const token = localStorage.getItem('authToken');
     try {
-        const response = await axios.post(`http://localhost:3000/api/appointments/${appointmentId}/payment`, {}, {
+        const response = await axios.post(`http://65.0.45.199:3000/api/appointments/${appointmentId}/payment`, {}, {
             headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
             handler: async (paymentResponse) => {
                 try {
                     const updateResponse = await axios.post(
-                        `http://localhost:3000/api/appointments/${appointmentId}/payment/status`,
+                        `http://65.0.45.199:3000/api/appointments/${appointmentId}/payment/status`,
                         {
                             order_id: options.order_id,
                             payment_id: paymentResponse.razorpay_payment_id,
@@ -304,7 +304,7 @@ const leaveReview = async (event) => {
     const comment = document.getElementById('reviewComment').value;
 
     try {
-        const response = await axios.post('http://localhost:3000/api/reviews', {
+        const response = await axios.post('http://65.0.45.199:3000/api/reviews', {
             appointmentId,
             staffId,
             rating,
@@ -327,7 +327,7 @@ const respondToReview = async (event) => {
     const response = document.getElementById('reviewResponse').value;
 
     try {
-        const res = await axios.put(`http://localhost:3000/api/reviews/${reviewId}/response`, {
+        const res = await axios.put(`http://65.0.45.199:3000/api/reviews/${reviewId}/response`, {
             response
         }, {
             headers: { Authorization: `Bearer ${token}` }
@@ -372,7 +372,7 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
         const token = localStorage.getItem('authToken');
     
         try {
-            const response = await axios.post('http://localhost:3000/api/services', 
+            const response = await axios.post('http://65.0.45.199:3000/api/services', 
                 { name, description, duration, price, availability },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -397,7 +397,7 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
         const token = localStorage.getItem('authToken');
 
         try {
-            const response = await axios.post('http://localhost:3000/api/staff', 
+            const response = await axios.post('http://65.0.45.199:3000/api/staff', 
                 { name, specialization, availability },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -417,15 +417,14 @@ document.getElementById('respondToReviewForm').addEventListener('submit', respon
 
         e.preventDefault();
     
-        const staffId = document.getElementById('assignStaffId').value;
+        const staffId = document.getElementById('assignStaffId').value; 
     
-        const serviceId = document.getElementById('assignServiceId').value;
+        const serviceId = document.getElementById('assignServiceId').value; 
     
-        const token = localStorage.getItem('authToken');
-
+        const token = localStorage.getItem('authToken');  
         try {
     
-            const response = await axios.post('http://localhost:3000/api/staff/assign-service',
+            const response = await axios.post('http://65.0.45.199:3000/api/staff/assign-service',
     
                 { staffId, serviceId },
     
